@@ -1,7 +1,7 @@
 
 const getData = async (query, page = 1) => {
     console.log(`requested page: ${page > 1 ? page - 1 : page}`)
-    const data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=1e59b2c0159f1a796faec2c49e9bd77e&query=${query}&append_to_response=genre, images&page=${page > 1 ? page - 1 : page}`)
+    const data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=1e59b2c0159f1a796faec2c49e9bd77e&query=${query}&append_to_response=genre,images&page=${page > 1 ? page - 1 : page}&include_adult=false&language=en-US&region=US`)
         .then(response => response.json())
         .catch(err => { throw Error(err) });
 
