@@ -1,12 +1,12 @@
 {
   "name": "webservice",
   "version": "1.0.0",
-  "description": "Web service for \u001b[1;6D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5CBackend webservice for MovieSearch",
+  "description": "Web service for Backend webservice for MovieSearch",
   "main": "server.js",
   "scripts": {
     "start": "clear && nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  }, 
   "author": "Joshua A. Dix <jadix117@gmail.com>",
   "license": "MIT",
   "dependencies": {
