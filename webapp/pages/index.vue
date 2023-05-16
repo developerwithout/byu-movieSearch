@@ -3,8 +3,8 @@
         <h1 class="page-title">Movie Search</h1>
         <div class="user-card-list">
             <MovieCard v-for="(movie) in movies" :key="movie.movie_id" :movie="movie" @click="goToMovie(movie)" />
-            <Pagination :current="currentPage" :pages="totalPages" />
         </div>
+        <Pagination :currentPage="currentPage" :totalPages="totalPages" @update="goToPage"/>
     </div>
 </template>
 
@@ -14,9 +14,6 @@ import MovieCard from '~/components/MovieCard.vue';
 export default {
     components: {
         MovieCard
-    },
-    setup() {
-        // this.movie = useMovies();
     },
     data() {
         return {
@@ -28,13 +25,18 @@ export default {
     async created() {
         const data = await useFetch('http://localhost:8080/api/movies/popular/').then(response => response.data.value.response);
         this.movies = data.movies;
-        this.currentPage = data.page;
+        this.currentPage = data.currentPage;
         this.totalPages = data.pages;
     },
     methods: {
         goToMovie(movie) {
-            console.dir(movie.title)
-            // this.$router.push(`/movie/${movie.title}`)
+            this.$router.push(`/movie/${movie.title}`)
+        },
+        async goToPage(page) {
+            const data = await useFetch(`http://localhost:8080/api/movies/popular/?&page=${page}`).then(response => response.data.value.response);
+            this.movies = data.movies;
+            this.currentPage = data.currentPage;
+            this.totalPages = data.pages;
         }
     }
 }

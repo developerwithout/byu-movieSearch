@@ -25,18 +25,19 @@ export default {
     data() {
         return {
             searchTerm: "",
+            movies: []
         };
     },
     methods: {
         async searchMovies() {
-            movies = await fetch(`http://localhost:8080/api/movies?search=${this.searchTerm}`)
+            this.movies = await fetch(`http://localhost:8080/api/movies?search=${this.searchTerm}`)
                 .then(response => response.json())
         },
     },
 };
 </script>
   
-<style>
+<style scoped>
 .header {
     display: flex;
     align-items: center;
