@@ -4,8 +4,8 @@
             <img src="/path/to/logo.png" alt="Logo" />
         </div>
         <div class="search">
-            <input type="text" v-model="searchTerm" @keyup.enter="searchUsers" placeholder="Search Movies" />
-            <button @click="searchUsers">Search</button>
+            <input type="text" v-model="searchTerm" @keyup.enter="searchMovies" placeholder="Search Movies" />
+            <button @click="searchMovies">Search</button>
         </div>
         <nav class="nav">
             <ul class="nav__list">
@@ -19,14 +19,18 @@
   
 <script>
 export default {
+    setup() {
+        // this.movie = useMovies();
+    },
     data() {
         return {
             searchTerm: "",
         };
     },
     methods: {
-        searchUsers() {
-            console.log(`Searching for mevies with term: ${this.searchTerm}`);
+        async searchMovies() {
+            movies = await fetch(`http://localhost:8080/api/movies?search=${this.searchTerm}`)
+                .then(response => response.json())
         },
     },
 };
@@ -95,4 +99,3 @@ export default {
     cursor: pointer;
 }
 </style>
-  

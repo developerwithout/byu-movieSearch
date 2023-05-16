@@ -3,8 +3,8 @@
         <img :src="movie.poster_image_url" alt="Movie Poster" />
         <div class="movie-info">
             <h2>{{ movie.title }}</h2>
-            <p>{{ movie.description }}</p>
-            <p>{{ movie.popularity_summary }}</p>
+            <p>{{ movie.summary }}</p>
+            <p>{{ movie.popularity }}</p>
         </div>
     </div>
 </template>
@@ -36,7 +36,12 @@ export default {
     font-size: 1.5rem;
     font-weight: bold;
 }
-
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: space-between;
+}
 .movie-card p {
     margin: 0;
     font-size: 1.25rem;

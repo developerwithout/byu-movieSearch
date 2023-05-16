@@ -12,7 +12,9 @@ const PORT = 8080;
 const app = express();
 
 // APP Setup
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());

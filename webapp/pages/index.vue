@@ -2,77 +2,45 @@
     <div class="main-page">
         <h1 class="page-title">Movie Search</h1>
         <div class="user-card-list">
-            <MovieCard
-                v-for="(movie) in movies"
-                :key="movie.movie_id"
-                :movie="movie"
-                @click=" goToMovie(movie)" />
+            <MovieCard v-for="(movie) in movies" :key="movie.movie_id" :movie="movie" @click="goToMovie(movie)" />
+            <Pagination :current="currentPage" :pages="totalPages" />
         </div>
     </div>
 </template>
 
 <script>
-import MovieCard from '~/components/MovieCard.vue'
+import MovieCard from '~/components/MovieCard.vue';
 
-export default{
+export default {
     components: {
         MovieCard
     },
+    setup() {
+        // this.movie = useMovies();
+    },
     data() {
         return {
-            movies: [
-                {
-                    "movie_id": 1,
-                    "title": "Some Movie",
-                    "poster_image_url": 'https://dummyimage.com/400x600/AAA/0011ff.jpgtext=poster+image',
-                    "description": "Deserunt excepteur et id mollit occaecat incididunt mollit ex. Labore est id sint ipsum esse labore. Ipsum occaecat pariatur et et minim laboris. Exercitation culpa ipsum veniam dolore ad irure dolor aliqua anim non ex magna officia nulla.",
-                    "popularity_summary": "{popularity} out of {vote_count}"
-                }, {
-                    "movie_id": 2,
-                    "title": "Some Movie 2",
-                    "poster_image_url": 'https://dummyimage.com/400x600/AAA/0011ff.jpgtext=poster+image',
-                    "description": "Deserunt excepteur et id mollit occaecat incididunt mollit ex. Labore est id sint ipsum esse labore. Ipsum occaecat pariatur et et minim laboris. Exercitation culpa ipsum veniam dolore ad irure dolor aliqua anim non ex magna officia nulla.",
-                    "popularity_summary": "{popularity} out of {vote_count}"
-                }, {
-                    "movie_id": 3,
-                    "title": "Some Movie 3",
-                    "poster_image_url": 'https://dummyimage.com/400x600/AAA/0011ff.jpgtext=poster+image',
-                    "description": "Deserunt excepteur et id mollit occaecat incididunt mollit ex. Labore est id sint ipsum esse labore. Ipsum occaecat pariatur et et minim laboris. Exercitation culpa ipsum veniam dolore ad irure dolor aliqua anim non ex magna officia nulla.",
-                    "popularity_summary": "{popularity} out of {vote_count}"
-                }, {
-                    "movie_id": 4,
-                    "title": "Some Movie 4",
-                    "poster_image_url": 'https://dummyimage.com/400x600/AAA/0011ff.jpgtext=poster+image',
-                    "description": "Deserunt excepteur et id mollit occaecat incididunt mollit ex. Labore est id sint ipsum esse labore. Ipsum occaecat pariatur et et minim laboris. Exercitation culpa ipsum veniam dolore ad irure dolor aliqua anim non ex magna officia nulla.",
-                    "popularity_summary": "{popularity} out of {vote_count}"
-                }, {
-                    "movie_id": 5,
-                    "title": "Some Movie 5",
-                    "poster_image_url": 'https://dummyimage.com/400x600/AAA/0011ff.jpgtext=poster+image',
-                    "description": "Deserunt excepteur et id mollit occaecat incididunt mollit ex. Labore est id sint ipsum esse labore. Ipsum occaecat pariatur et et minim laboris. Exercitation culpa ipsum veniam dolore ad irure dolor aliqua anim non ex magna officia nulla.",
-                    "popularity_summary": "{popularity} out of {vote_count}"
-                }
-            ] 
+            movies: [],
+            currentPage: 0,
+            totalPages: 0
         }
     },
-    async created() {},
+    async created() {
+        const data = await useFetch('http://localhost:8080/api/movies/popular/').then(response => response.data.value.response);
+        this.movies = data.movies;
+        this.currentPage = data.page;
+        this.totalPages = data.pages;
+    },
     methods: {
         goToMovie(movie) {
             console.dir(movie.title)
-            this.$router.push(`/movie/${movie.title}`)
+            // this.$router.push(`/movie/${movie.title}`)
         }
     }
 }
 </script>
 
 <style>
-* {
-    font-size: 1rem;
-    box-sizing: border-box;
-    margin: 0;
-    font-family: Arial, Helvetica;
-}
-
 .main-page {
     max-width: 900px;
     margin: 0 auto;
@@ -81,6 +49,7 @@ export default{
 .page-title {
     font-size: 5rem;
     display: center;
+    text-align: center;
 }
 
 .movie-card-list {
