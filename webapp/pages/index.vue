@@ -1,10 +1,12 @@
 <template>
     <div class="main-page">
         <h1 class="page-title">Movie Search</h1>
-        <div class="user-card-list">
+        <div class="movie-card-list">
             <MovieCard v-for="(movie) in movies" :key="movie.movie_id" :movie="movie" @click="goToMovie(movie)" />
         </div>
-        <Pagination :currentPage="currentPage" :totalPages="totalPages" @update="goToPage"/>
+        <Pagination :currentPage="currentPage" :pageCount="totalPages" class="pagination" @update="goToPage"
+            @nextPage="pageChangeHandle('next')" @previousPage="pageChangeHandle('previous')"
+            @loadPage="pageChangeHandle" />
     </div>
 </template>
 
@@ -23,7 +25,7 @@ export default {
         }
     },
     async created() {
-        const data = await useFetch('http://localhost:8080/api/movies/popular/').then(response => response.data.value.response);
+        const data = await useFetch('http://localhost:8080/api/movies/popular/?page=1').then(response => response.data.value.response);
         this.movies = data.movies;
         this.currentPage = data.currentPage;
         this.totalPages = data.pages;
@@ -33,7 +35,25 @@ export default {
             this.$router.push(`/movie/${movie.title}`)
         },
         async goToPage(page) {
-            const data = await useFetch(`http://localhost:8080/api/movies/popular/?&page=${page}`).then(response => response.data.value.response);
+            const data = await useFetch(`http://localhost:8080/api/movies/popular/?page=${page}`).then(response => response.data.value.response);
+            this.movies = data.movies;
+            this.currentPage = data.currentPage;
+            this.totalPages = data.pages;
+        },
+        async pageChangeHandle(value) {
+            switch (value) {
+                case 'next':
+                    this.currentPage += 1
+                    break
+                case 'previous':
+                    this.currentPage -= 1
+                    break
+                default:
+                    this.currentPage = value
+            }
+            const { data } = await useFetch(`http://localhost:8080/api/movies/popular/?&page=${this.currentPage}`).then(response => response.data.value.response);
+
+            console.log(data)
             this.movies = data.movies;
             this.currentPage = data.currentPage;
             this.totalPages = data.pages;
@@ -56,7 +76,7 @@ export default {
 
 .movie-card-list {
     display: flex;
-    flex: column wrap;
+    flex-flow: column;
     justify-content: center;
     margin-top: 2rem;
 }

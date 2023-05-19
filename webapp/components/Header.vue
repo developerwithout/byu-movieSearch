@@ -1,7 +1,7 @@
 <template>
     <header class="header">
         <div class="logo">
-            <img src="/path/to/logo.png" alt="Logo" />
+            LOGO
         </div>
         <div class="search">
             <input type="text" v-model="searchTerm" @keyup.enter="searchMovies" placeholder="Search Movies" />
@@ -10,14 +10,13 @@
         <nav class="nav">
             <ul class="nav__list">
                 <li class="nav__item"><a href="/">Home</a></li>
-                <li class="nav__item"><a href="/about">About</a></li>
-                <li class="nav__item"><a href="/random-movie">Random Movie</a></li>
             </ul>
         </nav>
     </header>
 </template>
   
 <script>
+
 export default {
     setup() {
         // this.movie = useMovies();
@@ -31,7 +30,7 @@ export default {
     methods: {
         async searchMovies() {
             this.movies = await fetch(`http://localhost:8080/api/movies?search=${this.searchTerm}`)
-                .then(response => response.json())
+                .then(response => response.json());
         },
     },
 };
@@ -43,16 +42,18 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    background-color: #f2f2f2;
+    background-color: #2196f3;
+    color: #fff;
 }
-
-.logo { width: 25%; }
-
-.logo img {
-    height: 50px;
-    justify-self: flex-start;
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
+.logo-icon {
+    stroke: #fff;
+    fill: #fff;
+}
 .nav {
     width: 25%;
     display: flex;
@@ -70,7 +71,7 @@ export default {
 }
 
 .nav__item a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
     font-weight: bold;
 }
@@ -92,7 +93,7 @@ export default {
 }
 
 .search button {
-    background-color: #007bff;
+    background-color: #1769aa;
     color: #fff;
     border: none;
     border-radius: 5px;

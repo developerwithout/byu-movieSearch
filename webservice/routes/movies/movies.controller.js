@@ -61,8 +61,9 @@ const search = async(req, res, next) => {
 const popular = async(req, res, next) => {
     try {
         const { page } = req.query;
-        console.log(page)
-        const data = await getPopularMovies(page);
+        const data = await getPopularMovies(Number(page));
+
+        console.log(data)
 
         res.json({
             message: 'success',
