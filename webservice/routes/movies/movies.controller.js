@@ -15,7 +15,7 @@ const searchMovies = async (search, page = 1) => {
 }
 
 const getPopularMovies = async(page = 1) => {
-    const data = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=1e59b2c0159f1a796faec2c49e9bd77e&language=en-US&page=1&include_adult=false&append_to_response=genre,images`)
+    const data = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=1e59b2c0159f1a796faec2c49e9bd77e&language=en-US&page=${page > 1 ? page - 1 : page}&include_adult=false&append_to_response=genre,images`)
         .then(response => response.json())
         .catch(err => { throw new Error(err) })
 

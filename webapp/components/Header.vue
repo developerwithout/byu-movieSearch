@@ -1,10 +1,26 @@
+<script setup>
+const { movieList, setMovies } = useMovieData();
+let searchTerm = ""
+
+const emit = defineEmits(['update:search']);
+
+const searchMovies = async () => {
+    const response = await useFetch(`http://localhost:8080/api/movies?search=${searchTerm}`)
+        .then(response =>response.data.value.response);
+
+    setMovies(response)
+}
+</script>
+
 <template>
     <header class="header">
         <div class="logo">
             LOGO
         </div>
         <div class="search">
-            <input type="text" v-model="searchTerm" @keyup.enter="searchMovies" placeholder="Search Movies" />
+            <SearchInput
+                v-model="searchTerm" 
+                @keyup.enter="searchMovies"/>
             <button @click="searchMovies">Search</button>
         </div>
         <nav class="nav">
@@ -14,27 +30,6 @@
         </nav>
     </header>
 </template>
-  
-<script>
-
-export default {
-    setup() {
-        // this.movie = useMovies();
-    },
-    data() {
-        return {
-            searchTerm: "",
-            movies: []
-        };
-    },
-    methods: {
-        async searchMovies() {
-            this.movies = await fetch(`http://localhost:8080/api/movies?search=${this.searchTerm}`)
-                .then(response => response.json());
-        },
-    },
-};
-</script>
   
 <style scoped>
 .header {

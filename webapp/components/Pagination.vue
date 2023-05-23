@@ -7,6 +7,8 @@
         <PaginationTrigger v-for="paginationTrigger in paginationTriggers"
             :class="{ 'current': paginationTrigger === currentPage }" :key="paginationTrigger"
             :pageNumber="paginationTrigger" @loadPage="onLoadPage" class="page" />
+
+            
         <button class="btn btn-round btn-next btn-warning" :disabled="isNextButtonDisabled" @click="nextPage">
             Next
         </button>
@@ -22,10 +24,12 @@ export default {
         },
         currentPage: {
             type: Number,
+            default: 1,
             required: true,
         },
         pageCount: {
             type: Number,
+            default: 1,
             required: true,
         }
     },
@@ -34,7 +38,7 @@ export default {
             return this.currentPage === 1;
         },
         isNextButtonDisabled() {
-            return this.currentPage === this.totalPages;
+            return this.currentPage === this.pageCount;
         },
         paginationTriggers() {
             const currentPage = this.currentPage;
