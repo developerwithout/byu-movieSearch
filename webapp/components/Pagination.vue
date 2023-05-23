@@ -7,7 +7,6 @@
         <PaginationTrigger v-for="paginationTrigger in paginationTriggers"
             :class="{ 'current': paginationTrigger === currentPage }" :key="paginationTrigger"
             :pageNumber="paginationTrigger" @loadPage="onLoadPage" class="page" />
-
             
         <button class="btn btn-round btn-next btn-warning" :disabled="isNextButtonDisabled" @click="nextPage">
             Next

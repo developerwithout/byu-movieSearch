@@ -51,12 +51,14 @@ export default {
                 default:
                     this.currentPage = value
             }
-            const { data } = await useFetch(`http://localhost:8080/api/movies/popular/?&page=${this.currentPage}`).then(response => response.data.value.response);
-
+            await useFetch(`http://localhost:8080/api/movies/popular/?&page=${this.currentPage}`).then(response => {
+                const data = response.data.value.response
+                this.movies = data.movies;
+                this.currentPage = data.currentPage;
+                this.totalPages = data.pages;
+            });
             console.log(data)
-            this.movies = data.movies;
-            this.currentPage = data.currentPage;
-            this.totalPages = data.pages;
+            
         }
     }
 }

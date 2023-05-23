@@ -1,5 +1,5 @@
 <script setup>
-const { movieList, setMovies } = useMovieData();
+// const { movieList, setMovies } = useMovieData();
 let searchTerm = ""
 
 const emit = defineEmits(['update:search']);
